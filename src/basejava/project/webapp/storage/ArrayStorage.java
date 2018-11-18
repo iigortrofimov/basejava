@@ -15,7 +15,7 @@ public class ArrayStorage {
     // update a resume if it is already in storage
     public void update(Resume r) {
         int x = check(r.getUuid());
-        if (x != 0) {
+        if (x >= 0) {
             storage[x] = r;
         } else System.out.println("Resume not found");
 
@@ -27,24 +27,21 @@ public class ArrayStorage {
         for (int i = 0; i < size; i++) {
             storage[i] = null;
         }
+        size = 0;
     }
 
     //save new resume if it' s not in storage yet
     public void save(Resume r) {
-        if (check(r.getUuid()) == 0) {
-            for (int i = 0; i < storage.length; i++)
-                if (storage[i] == null) {
-                    storage[i] = r;
-                    size++;
-                    break;
-                }
-        } else System.out.println("Resume already added before");
+        if (check(r.getUuid()) == -1 && size < storage.length) {
+            storage[size] = r;
+            size++;
+        } else System.out.println("Resume already added before or storage is full");
     }
 
     // get an individual resume
     public Resume get(String uuid) {
         int x = check(uuid);
-        if (x != 0) {
+        if (x >= 0) {
             return storage[x];
         } else System.out.println("Resume not found");
         return null;
@@ -54,8 +51,8 @@ public class ArrayStorage {
     // delete an individual resume
     public void delete(String uuid) {
         int x = check(uuid);
-        if (x != 0) {
-            for (int j = x; j < size - 1; j++) storage[x] = storage[x + 1];
+        if (x >= 0) {
+            storage[x] = storage[size - 1];
             storage[size - 1] = null;
             size--;
         } else System.out.println("Resume not found");
@@ -84,22 +81,6 @@ public class ArrayStorage {
             if (uuid.equals(storage[i].getUuid())) {
                 return i;
             }
-        return 0;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ArrayStorage that = (ArrayStorage) o;
-        return size == that.size &&
-                Arrays.equals(storage, that.storage);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(size);
-        result = 31 * result + Arrays.hashCode(storage);
-        return result;
+        return -1;
     }
 }

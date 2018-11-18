@@ -26,7 +26,10 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.get("1234");
         ARRAY_STORAGE.delete("123");
         printAll();
-
+        Resume sidr = new Resume();
+        sidr.setUuid("1234");
+        ARRAY_STORAGE.update(sidr);
+        printAll();
     }
 
     static void printAll() {
