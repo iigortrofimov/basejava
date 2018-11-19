@@ -2,9 +2,6 @@ package basejava.project.webapp.storage;
 
 import basejava.project.webapp.model.Resume;
 
-import java.util.Arrays;
-import java.util.Objects;
-
 /**
  * Array based storage for Resumes
  */
@@ -14,15 +11,13 @@ public class ArrayStorage {
 
     // update a resume if it is already in storage
     public void update(Resume r) {
-        int x = check(r.getUuid());
-        if (x >= 0) {
-            storage[x] = r;
+        int index = check(r.getUuid());
+        if (index >= 0) {
+            storage[index] = r;
         } else System.out.println("Resume not found");
 
     }
 
-
-    // delete all resumes
     public void clear() {
         for (int i = 0; i < size; i++) {
             storage[i] = null;
@@ -32,27 +27,26 @@ public class ArrayStorage {
 
     //save new resume if it' s not in storage yet
     public void save(Resume r) {
-        if (check(r.getUuid()) == -1 && size < storage.length) {
-            storage[size] = r;
-            size++;
-        } else System.out.println("Resume already added before or storage is full");
+        if (size < storage.length) {
+            if (check(r.getUuid()) == -1) {
+                storage[size] = r;
+                size++;
+            } else System.out.println("Resume already added before");
+        } else System.out.println("Storage is full");
     }
 
-    // get an individual resume
     public Resume get(String uuid) {
-        int x = check(uuid);
-        if (x >= 0) {
-            return storage[x];
+        int index = check(uuid);
+        if (index >= 0) {
+            return storage[index];
         } else System.out.println("Resume not found");
         return null;
     }
 
-
-    // delete an individual resume
     public void delete(String uuid) {
-        int x = check(uuid);
-        if (x >= 0) {
-            storage[x] = storage[size - 1];
+        int index = check(uuid);
+        if (index >= 0) {
+            storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
         } else System.out.println("Resume not found");
@@ -63,14 +57,12 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
 
-    // return array of all resumes
     public Resume[] getAll() {
         Resume[] array = new Resume[size];
-        for (int i = 0; i < size; i++) array[i] = storage[i];
+        System.arraycopy(storage, 0, array, 0, size);
         return array;
     }
 
-    //return amount of resumes in storage
     public int size() {
         return size;
     }

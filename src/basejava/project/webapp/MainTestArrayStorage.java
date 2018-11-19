@@ -3,8 +3,6 @@ package basejava.project.webapp;
 import basejava.project.webapp.model.Resume;
 import basejava.project.webapp.storage.ArrayStorage;
 
-import java.util.Arrays;
-
 /**
  * Test for your ArrayStoragee implementation
  */
