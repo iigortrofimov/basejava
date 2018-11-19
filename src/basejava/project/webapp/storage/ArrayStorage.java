@@ -6,16 +6,17 @@ import basejava.project.webapp.model.Resume;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[10_000];
+    private Resume[] storage = new Resume[5];
     private int size = 0;
 
-    // update a resume if it is already in storage
+
     public void update(Resume r) {
-        int index = check(r.getUuid());
+        int index = getIndex(r.getUuid());
         if (index >= 0) {
             storage[index] = r;
-        } else System.out.println("Resume not found");
-
+        } else {
+            System.out.println("Resume not found");
+        }
     }
 
     public void clear() {
@@ -25,32 +26,36 @@ public class ArrayStorage {
         size = 0;
     }
 
-    //save new resume if it' s not in storage yet
     public void save(Resume r) {
-        if (size < storage.length) {
-            if (check(r.getUuid()) == -1) {
-                storage[size] = r;
-                size++;
-            } else System.out.println("Resume already added before");
-        } else System.out.println("Storage is full");
+        if (size >= storage.length) {
+            System.out.println("Storage is full");
+        } else if (getIndex(r.getUuid()) == -1) {
+            storage[size] = r;
+            size++;
+        } else {
+            System.out.println("Resume already added before");
+        }
     }
 
     public Resume get(String uuid) {
-        int index = check(uuid);
+        int index = getIndex(uuid);
         if (index >= 0) {
             return storage[index];
-        } else System.out.println("Resume not found");
+        } else {
+            System.out.println("Resume not found");
+        }
         return null;
     }
 
     public void delete(String uuid) {
-        int index = check(uuid);
+        int index = getIndex(uuid);
         if (index >= 0) {
             storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
-        } else System.out.println("Resume not found");
-
+        } else {
+            System.out.println("Resume not found");
+        }
     }
 
     /**
@@ -67,12 +72,12 @@ public class ArrayStorage {
         return size;
     }
 
-    //check and return index in storage
-    private int check(String uuid) {
-        for (int i = 0; i < size; i++)
+    private int getIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
                 return i;
             }
+        }
         return -1;
     }
 }
