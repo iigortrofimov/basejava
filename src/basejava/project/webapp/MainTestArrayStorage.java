@@ -2,12 +2,13 @@ package basejava.project.webapp;
 
 import basejava.project.webapp.model.Resume;
 import basejava.project.webapp.storage.ArrayStorage;
+import basejava.project.webapp.storage.Storage;
 
 /**
  * Test for your ArrayStoragee implementation
  */
 public class MainTestArrayStorage {
-    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    private static final Storage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
 
@@ -30,7 +31,7 @@ public class MainTestArrayStorage {
         printAll();
     }
 
-    static void printAll() {
+    private static void printAll() {
         System.out.println("\nGet All");
         for (Resume r : ARRAY_STORAGE.getAll()) {
             System.out.println(r);
