@@ -2,11 +2,14 @@ package basejava.project.webapp.storage;
 
 import basejava.project.webapp.model.Resume;
 
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[5];
+    private static final int STORAGE_LIMIT = 10_000;
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
 
@@ -15,25 +18,23 @@ public class ArrayStorage {
         if (index >= 0) {
             storage[index] = r;
         } else {
-            System.out.println("Resume not found");
+            System.out.println("Resume: " + r.getUuid() + " not found");
         }
     }
 
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
     public void save(Resume r) {
-        if (size >= storage.length) {
-            System.out.println("Storage is full");
+        if (size >= STORAGE_LIMIT) {
+            System.out.println("Storage overflow!");
         } else if (getIndex(r.getUuid()) == -1) {
             storage[size] = r;
             size++;
         } else {
-            System.out.println("Resume already added before");
+            System.out.println("Resume: " + r.getUuid() + " already exist");
         }
     }
 
@@ -42,7 +43,7 @@ public class ArrayStorage {
         if (index >= 0) {
             return storage[index];
         } else {
-            System.out.println("Resume not found");
+            System.out.println("Resume: " + uuid + " not found");
         }
         return null;
     }
@@ -54,7 +55,7 @@ public class ArrayStorage {
             storage[size - 1] = null;
             size--;
         } else {
-            System.out.println("Resume not found");
+            System.out.println("Resume: " + uuid + " not found");
         }
     }
 
@@ -63,9 +64,7 @@ public class ArrayStorage {
      */
 
     public Resume[] getAll() {
-        Resume[] array = new Resume[size];
-        System.arraycopy(storage, 0, array, 0, size);
-        return array;
+        return Arrays.copyOfRange(storage, 0, size);
     }
 
     public int size() {
