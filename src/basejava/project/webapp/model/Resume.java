@@ -3,11 +3,10 @@ package basejava.project.webapp.model;
 /**
  * Initial resume class
  */
-public class Resume {
+public class Resume implements Comparable<Resume> {
 
     // Unique identifier
     private String uuid;
-
 
     public String getUuid() {
         return uuid;
@@ -36,4 +35,10 @@ public class Resume {
     public int hashCode() {
         return uuid.hashCode();
     }
+
+    @Override
+    public int compareTo(Resume o) {
+        return uuid.compareTo(o.uuid);
+    }
+
 }

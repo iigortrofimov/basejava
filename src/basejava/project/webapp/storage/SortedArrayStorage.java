@@ -4,11 +4,9 @@ import basejava.project.webapp.model.Resume;
 
 import java.util.Arrays;
 
-/**
- * Array based storage for Resumes
- */
-public class ArrayStorage extends AbstractArrayStorage {
+public class SortedArrayStorage extends AbstractArrayStorage {
 
+    @Override
     public void update(Resume r) {
         int index = getIndex(r.getUuid());
         if (index >= 0) {
@@ -18,49 +16,50 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
+    @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
+    @Override
     public void save(Resume r) {
+        int index = Math.abs(getIndex(r.getUuid())) - 1;
         if (size >= STORAGE_LIMIT) {
             System.out.println("Storage overflow!");
-        } else if (getIndex(r.getUuid()) == -1) {
+        } else if (size == 0) {
             storage[size] = r;
+            size++;
+        } else if (getIndex(r.getUuid()) < 0) {
+            System.arraycopy(storage, index, storage, index + 1, size - index);
+            storage[index] = r;
             size++;
         } else {
             System.out.println("Resume: " + r.getUuid() + " already exist");
         }
     }
 
-
+    @Override
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index >= 0) {
-            storage[index] = storage[size - 1];
-            storage[size - 1] = null;
+            System.arraycopy(storage, index + 1, storage, index, size - index);
+            storage[size] = null;
             size--;
         } else {
             System.out.println("Resume: " + uuid + " not found");
         }
     }
 
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
-
+    @Override
     public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-
+    @Override
     protected int getIndex(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].getUuid())) {
-                return i;
-            }
-        }
-        return -1;
+        Resume searchKey = new Resume();
+        searchKey.setUuid(uuid);
+        return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 }
