@@ -8,14 +8,22 @@ import basejava.project.webapp.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void save(Resume r) {
-        if (size >= STORAGE_LIMIT) {
-            System.out.println("Storage overflow!");
-        } else if (getIndex(r.getUuid()) == -1) {
+    public void saveResume(Resume r) {
+        if (getIndex(r.getUuid()) == -1) {
             storage[size] = r;
             size++;
+        }
+    }
+
+    @Override
+    public void delete(String uuid) {
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         } else {
-            System.out.println("Resume: " + r.getUuid() + " already exist");
+            System.out.println("Resume: " + uuid + " not found");
         }
     }
 
