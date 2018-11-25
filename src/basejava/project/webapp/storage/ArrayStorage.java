@@ -8,23 +8,13 @@ import basejava.project.webapp.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void saveResume(Resume r) {
-        if (getIndex(r.getUuid()) == -1) {
-            storage[size] = r;
-            size++;
-        }
+    public void insertResume(Resume r, int index) {
+        storage[size] = r;
     }
 
     @Override
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            storage[index] = storage[size - 1];
-            storage[size - 1] = null;
-            size--;
-        } else {
-            System.out.println("Resume: " + uuid + " not found");
-        }
+    public void deleteResume(int index) {
+        storage[index] = storage[size - 1];
     }
 
     @Override
