@@ -1,5 +1,8 @@
 package basejava.project.webapp.storage;
 
+import basejava.project.webapp.exception.ExistStorageException;
+import basejava.project.webapp.exception.NotExistStorageException;
+import basejava.project.webapp.exception.StorageException;
 import basejava.project.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -14,7 +17,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             storage[index] = r;
         } else {
-            System.out.println("Resume: " + r.getUuid() + " not found");
+            throw new NotExistStorageException(r.getUuid());
         }
     }
 
@@ -26,10 +29,10 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
         if (index >= 0) {
-            System.out.println("Resume: " + r.getUuid() + " already exist");
+            throw new ExistStorageException(r.getUuid());
         } else if (size >= STORAGE_LIMIT) {
-            System.out.println("Storage overflow!");
-        } else if (getIndex(r.getUuid()) < 0) {
+           throw new StorageException("Storage overflow!", r.getUuid());
+        } else {
             insertResume(r, index);
             size++;
         }
@@ -44,9 +47,8 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             return storage[index];
         } else {
-            System.out.println("Resume: " + uuid + " not found");
+            throw new NotExistStorageException(uuid);
         }
-        return null;
     }
 
     public void delete(String uuid) {
@@ -56,7 +58,7 @@ public abstract class AbstractArrayStorage implements Storage {
             storage[size - 1] = null;
             size--;
         } else {
-            System.out.println("Resume: " + uuid + " not found");
+            throw new NotExistStorageException(uuid);
         }
     }
 

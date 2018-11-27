@@ -13,11 +13,8 @@ public class MainTestArrayStorage {
     public static void main(String[] args) {
 
         Resume trof = new Resume();
-        trof.setUuid("123");
         Resume volk = new Resume();
-        volk.setUuid("1234");
         Resume petr = new Resume();
-        petr.setUuid("12345");
         ARRAY_STORAGE.save(trof);
         ARRAY_STORAGE.save(volk);
         ARRAY_STORAGE.save(petr);
@@ -26,7 +23,6 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.delete("123");
         printAll();
         Resume sidr = new Resume();
-        sidr.setUuid("1234");
         ARRAY_STORAGE.update(sidr);
         printAll();
     }
