@@ -13,63 +13,48 @@ public abstract class AbstractArrayStorage extends AbstractStorage implements St
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public void update(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            storage[index] = r;
-        } else {
-            throw new NotExistStorageException(r.getUuid());
-        }
-    }
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    public void save(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        } else if (size >= STORAGE_LIMIT) {
-            throw new StorageException("Storage overflow!", r.getUuid());
-        } else {
-            insertResume(r, index);
-            size++;
-        }
-    }
-
     public int size() {
         return size;
-    }
-
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            return storage[index];
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
-    }
-
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            deleteResume(index);
-            storage[size - 1] = null;
-            size--;
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
     }
 
     public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    protected abstract int getIndex(String uuid);
+    @Override
+    protected void updateResume(Resume r, int index) {
+        storage[index] = r;
+    }
 
-    protected abstract void insertResume(Resume r, int index);
+    @Override
+    protected void insertResume(Resume r, int index) {
+        if (size >= STORAGE_LIMIT) {
+            throw new StorageException("Storage overflow!", r.getUuid());
+        } else {
+            insertR(r, index);
+            size++;
+        }
+    }
 
-    protected abstract void deleteResume(int index);
+    @Override
+    protected Resume getResume(int index, String uuid) {
+        return storage[index];
+    }
+
+    @Override
+    protected void deleteResume(int index, String uuid) {
+        deleteR(index);
+        storage[size - 1] = null;
+        size--;
+    }
+
+    protected abstract void insertR(Resume r, int index);
+
+    protected abstract void deleteR (int index);
 }

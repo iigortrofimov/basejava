@@ -10,32 +10,10 @@ public class ListStorage extends AbstractStorage {
 
     protected ArrayList<Resume> storage = new ArrayList<>();
 
-    @Override
-    public void update(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            storage.add(index, r);
-        }
-    }
 
     @Override
     public void clear() {
         storage.clear();
-    }
-
-    @Override
-    public void save(Resume r) {
-        storage.add(r);
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        return storage.get(getIndex(uuid));
-    }
-
-    @Override
-    public void delete(String uuid) {
-        storage.remove(getIndex(uuid));
     }
 
     @Override
@@ -48,7 +26,28 @@ public class ListStorage extends AbstractStorage {
         return storage.size();
     }
 
-    public int getIndex(String uuid) {
+    @Override
+    protected void updateResume(Resume r, int index) {
+        storage.add(index, r);
+    }
+
+    @Override
+    protected void insertResume(Resume r, int index) {
+        storage.add(r);
+    }
+
+    @Override
+    protected Resume getResume(int index, String uuid) {
+        return storage.get(index);
+    }
+
+    @Override
+    protected void deleteResume(int index, String uuid) {
+        storage.remove(index);
+    }
+
+    @Override
+    protected int getIndex(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (storage.get(i).getUuid().equals(uuid)) {
                 return i;

@@ -8,12 +8,12 @@ import basejava.project.webapp.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void insertResume(Resume r, int index) {
+    public void insertR(Resume r, int index) {
         storage[size] = r;
     }
 
     @Override
-    public void deleteResume(int index) {
+    public void deleteR(int index) {
         storage[index] = storage[size - 1];
     }
 
