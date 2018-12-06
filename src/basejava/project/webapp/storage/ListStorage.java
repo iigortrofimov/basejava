@@ -3,57 +3,59 @@ package basejava.project.webapp.storage;
 import basejava.project.webapp.model.Resume;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.ListIterator;
+import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
 
-    protected ArrayList<Resume> storage = new ArrayList<>();
-
+    private List<Resume> resumeList = new ArrayList<>();
 
     @Override
     public void clear() {
-        storage.clear();
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return storage.toArray(new Resume[0]);
+        resumeList.clear();
     }
 
     @Override
     public int size() {
-        return storage.size();
+        return resumeList.size();
     }
 
     @Override
-    protected void updateResume(Resume r, int index) {
-        storage.add(index, r);
+    protected void updateResume(Resume r, Integer searchKey) {
+        resumeList.set(searchKey, r);
     }
 
     @Override
-    protected void insertResume(Resume r, int index) {
-        storage.add(r);
+    protected void insertResume(Resume r, Integer searchKey) {
+        resumeList.add(r);
     }
 
     @Override
-    protected Resume getResume(int index, String uuid) {
-        return storage.get(index);
+    protected Resume getResume(Integer searchKey) {
+        return resumeList.get(searchKey);
     }
 
     @Override
-    protected void deleteResume(int index, String uuid) {
-        storage.remove(index);
+    protected void deleteResume(Integer searchKey) {
+        resumeList.remove(searchKey.intValue());
     }
 
+    @Override
+    protected List<Resume> copyAllResumes() {
+        return new ArrayList<>(resumeList);
+    }
 
     @Override
-    protected int getIndex(String uuid) {
-        for (int i = 0; i < storage.size(); i++) {
-            if (storage.get(i).getUuid().equals(uuid)) {
+    protected boolean isSearchKeyExists(Integer searchKey) {
+        return searchKey != null;
+    }
+
+    @Override
+    protected Integer getSearchKey(String uuid) {
+        for (int i = 0; i < resumeList.size(); i++) {
+            if (resumeList.get(i).getUuid().equals(uuid)) {
                 return i;
             }
         }
-        return -1;
+        return null;
     }
 }
