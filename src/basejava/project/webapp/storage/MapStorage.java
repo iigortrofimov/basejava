@@ -2,9 +2,7 @@ package basejava.project.webapp.storage;
 
 import basejava.project.webapp.model.Resume;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MapStorage extends AbstractStorage<String> {
 
@@ -42,7 +40,9 @@ public class MapStorage extends AbstractStorage<String> {
 
     @Override
     protected List<Resume> copyAllResumes() {
-        return null;
+        List<Resume> resumeList = new ArrayList<>(storage.values());
+        Collections.sort(resumeList);
+        return resumeList;
     }
 
     @Override
