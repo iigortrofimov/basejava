@@ -39,11 +39,6 @@ public class ListStorage extends AbstractStorage<Integer> {
         resumeList.remove(searchKey.intValue());
     }
 
-//    @Override
-//    protected List<Resume> copyAllResumes() {
-//        return new ArrayList<>(resumeList);
-//    }
-
     @Override
     public List<Resume> getAll() {
         return new ArrayList<>(resumeList);

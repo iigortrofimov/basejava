@@ -11,7 +11,6 @@ public class MainTestArrayStorage {
     private static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
-
         Resume trof = new Resume();
         Resume volk = new Resume();
         Resume petr = new Resume();

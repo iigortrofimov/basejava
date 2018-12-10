@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * Array based storage for Resumes
  */
+
 public interface Storage {
 
     void update(Resume r);
@@ -22,6 +23,4 @@ public interface Storage {
     List<Resume> getAll();
 
     int size();
-
-
 }
