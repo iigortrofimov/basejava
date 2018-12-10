@@ -38,8 +38,16 @@ public class MapStorage extends AbstractStorage<String> {
         storage.remove(searchKey);
     }
 
+//    @Override
+//    protected List<Resume> copyAllResumes() {
+//        List<Resume> resumeList = new ArrayList<>(storage.values());
+//        Collections.sort(resumeList);
+//        return resumeList;
+//    }
+
+
     @Override
-    protected List<Resume> copyAllResumes() {
+    public List<Resume> getAll() {
         List<Resume> resumeList = new ArrayList<>(storage.values());
         Collections.sort(resumeList);
         return resumeList;

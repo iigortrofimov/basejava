@@ -16,7 +16,7 @@ public abstract class AbstractStorage<E> implements Storage {
 
     protected abstract void deleteResume(E searchKey);
 
-    protected abstract List<Resume> copyAllResumes();
+   // protected abstract List<Resume> copyAllResumes();
 
     protected abstract boolean isSearchKeyExists(E searchKey);
 
@@ -58,8 +58,8 @@ public abstract class AbstractStorage<E> implements Storage {
         return searchKey;
     }
 
-    @Override
-    public List<Resume> getAll() {
-        return copyAllResumes();
-    }
+//    @Override
+//    public List<Resume> getAll() {
+//        return copyAllResumes();
+//    }
 }
