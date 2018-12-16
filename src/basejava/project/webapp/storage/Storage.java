@@ -10,17 +10,17 @@ import java.util.List;
 
 public interface Storage {
 
-    void update(Resume r);
-
-    void clear();
-
     void save(Resume r);
-
-    Resume get(String uuid);
 
     void delete(String uuid);
 
-    List<Resume> getAll();
+    void update(Resume r);
+
+    Resume get(String uuid);
+
+    List<Resume> getAllSorted();
+
+    void clear();
 
     int size();
 }

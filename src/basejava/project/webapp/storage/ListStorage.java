@@ -10,13 +10,13 @@ public class ListStorage extends AbstractStorage<Integer> {
     private List<Resume> resumeList = new ArrayList<>();
 
     @Override
-    public void clear() {
-        resumeList.clear();
+    protected void insertResume(Resume r, Integer searchKey) {
+        resumeList.add(r);
     }
 
     @Override
-    public int size() {
-        return resumeList.size();
+    protected void deleteResume(Integer searchKey) {
+        resumeList.remove(searchKey.intValue());
     }
 
     @Override
@@ -25,18 +25,8 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected void insertResume(Resume r, Integer searchKey) {
-        resumeList.add(r);
-    }
-
-    @Override
     protected Resume getResume(Integer searchKey) {
         return resumeList.get(searchKey);
-    }
-
-    @Override
-    protected void deleteResume(Integer searchKey) {
-        resumeList.remove(searchKey.intValue());
     }
 
     @Override
@@ -57,5 +47,15 @@ public class ListStorage extends AbstractStorage<Integer> {
             }
         }
         return null;
+    }
+
+    @Override
+    public void clear() {
+        resumeList.clear();
+    }
+
+    @Override
+    public int size() {
+        return resumeList.size();
     }
 }

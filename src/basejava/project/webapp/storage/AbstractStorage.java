@@ -4,6 +4,10 @@ import basejava.project.webapp.exception.ExistStorageException;
 import basejava.project.webapp.exception.NotExistStorageException;
 import basejava.project.webapp.model.Resume;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 
 public abstract class AbstractStorage<E> implements Storage {
 
@@ -13,30 +17,32 @@ public abstract class AbstractStorage<E> implements Storage {
 
     protected abstract Resume getResume(E searchKey);
 
+    protected abstract List<Resume> getAll();
+
     protected abstract void deleteResume(E searchKey);
 
     protected abstract boolean isSearchKeyExists(E searchKey);
 
     protected abstract E getSearchKey(String uuid);
 
-    public void update(Resume r) {
-        E searchKey = getExistSearchKey(r.getUuid());
-        updateResume(r, searchKey);
-    }
-
     public void save(Resume r) {
         E searchKey = getNotExistSearchKey(r.getUuid());
         insertResume(r, searchKey);
     }
 
-    public Resume get(String uuid) {
-        E searchKey = getExistSearchKey(uuid);
-        return getResume(searchKey);
-    }
-
     public void delete(String uuid) {
         E searchKey = getExistSearchKey(uuid);
         deleteResume(searchKey);
+    }
+
+    public void update(Resume r) {
+        E searchKey = getExistSearchKey(r.getUuid());
+        updateResume(r, searchKey);
+    }
+
+    public Resume get(String uuid) {
+        E searchKey = getExistSearchKey(uuid);
+        return getResume(searchKey);
     }
 
     private E getExistSearchKey(String uuid) {
@@ -53,5 +59,11 @@ public abstract class AbstractStorage<E> implements Storage {
             throw new ExistStorageException(uuid);
         }
         return searchKey;
+    }
+
+    public List<Resume> getAllSorted() {
+        List<Resume> list = getAll();
+        Collections.sort(list);
+        return list;
     }
 }
