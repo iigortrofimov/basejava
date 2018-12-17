@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface Storage {
 
-    void save(Resume r);
+    void save(Resume resume);
 
     void delete(String uuid);
 
-    void update(Resume r);
+    void update(Resume resume);
 
     Resume get(String uuid);
 

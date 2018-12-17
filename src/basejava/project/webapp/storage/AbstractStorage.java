@@ -4,65 +4,64 @@ import basejava.project.webapp.exception.ExistStorageException;
 import basejava.project.webapp.exception.NotExistStorageException;
 import basejava.project.webapp.model.Resume;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
-public abstract class AbstractStorage<E> implements Storage {
+public abstract class AbstractStorage<SK> implements Storage {
 
-    protected abstract void updateResume(Resume r, E searchKey);
+    protected abstract void doUpdate(Resume resume, SK searchKey);
 
-    protected abstract void insertResume(Resume r, E searchKey);
+    protected abstract void doSave(Resume resume, SK searchKey);
 
-    protected abstract Resume getResume(E searchKey);
+    protected abstract Resume doGet(SK searchKey);
 
-    protected abstract List<Resume> getAll();
+    protected abstract List<Resume> doCopyAll();
 
-    protected abstract void deleteResume(E searchKey);
+    protected abstract void doDelete(SK searchKey);
 
-    protected abstract boolean isSearchKeyExists(E searchKey);
+    protected abstract boolean isExist(SK searchKey);
 
-    protected abstract E getSearchKey(String uuid);
+    protected abstract SK getSearchKey(String uuid);
 
-    public void save(Resume r) {
-        E searchKey = getNotExistSearchKey(r.getUuid());
-        insertResume(r, searchKey);
+    public void save(Resume resume) {
+        SK searchKey = getNotExistSearchKey(resume.getUuid());
+        doSave(resume, searchKey);
     }
 
     public void delete(String uuid) {
-        E searchKey = getExistSearchKey(uuid);
-        deleteResume(searchKey);
+        SK searchKey = getExistSearchKey(uuid);
+        doDelete(searchKey);
     }
 
-    public void update(Resume r) {
-        E searchKey = getExistSearchKey(r.getUuid());
-        updateResume(r, searchKey);
+    public void update(Resume resume) {
+        SK searchKey = getExistSearchKey(resume.getUuid());
+        doUpdate(resume, searchKey);
     }
 
     public Resume get(String uuid) {
-        E searchKey = getExistSearchKey(uuid);
-        return getResume(searchKey);
+        SK searchKey = getExistSearchKey(uuid);
+        return doGet(searchKey);
     }
 
-    private E getExistSearchKey(String uuid) {
-        E searchKey = getSearchKey(uuid);
-        if (!isSearchKeyExists(searchKey)) {
+    private SK getExistSearchKey(String uuid) {
+        SK searchKey = getSearchKey(uuid);
+        if (!isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
         return searchKey;
     }
 
-    private E getNotExistSearchKey(String uuid) {
-        E searchKey = getSearchKey(uuid);
-        if (isSearchKeyExists(searchKey)) {
+    private SK getNotExistSearchKey(String uuid) {
+        SK searchKey = getSearchKey(uuid);
+        if (isExist(searchKey)) {
             throw new ExistStorageException(uuid);
         }
         return searchKey;
     }
 
     public List<Resume> getAllSorted() {
-        List<Resume> list = getAll();
+        List<Resume> list = doCopyAll();
         Collections.sort(list);
         return list;
     }

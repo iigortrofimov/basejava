@@ -9,32 +9,32 @@ public class MapUuidStorage extends AbstractStorage<String> {
     private Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected void insertResume(Resume r, String searchKey) {
-        storage.put(searchKey, r);
+    protected void doSave(Resume resume, String searchKey) {
+        storage.put(searchKey, resume);
     }
 
     @Override
-    protected void deleteResume(String searchKey) {
+    protected void doDelete(String searchKey) {
         storage.remove(searchKey);
     }
 
     @Override
-    protected void updateResume(Resume r, String searchKey) {
-        storage.replace(searchKey, r);
+    protected void doUpdate(Resume resume, String searchKey) {
+        storage.replace(searchKey, resume);
     }
 
     @Override
-    protected Resume getResume(String searchKey) {
+    protected Resume doGet(String searchKey) {
         return storage.get(searchKey);
     }
 
     @Override
-    public List<Resume> getAll() {
+    public List<Resume> doCopyAll() {
         return new ArrayList<>(storage.values());
     }
 
     @Override
-    protected boolean isSearchKeyExists(String searchKey) {
+    protected boolean isExist(String searchKey) {
         return storage.containsKey(searchKey);
     }
 

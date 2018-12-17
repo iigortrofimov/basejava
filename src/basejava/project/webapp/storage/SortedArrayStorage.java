@@ -7,17 +7,17 @@ import java.util.Comparator;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-    private static final Comparator<Resume> RESUME_COMPARATOR = (o1, o2) -> o1.getUuid().compareTo(o2.getUuid());
+    private static final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getUuid);
 
     @Override
-    public void insertR(Resume r, int index) {
+    public void insertResume(Resume resume, int index) {
         int sortedIndex = -index - 1;
         System.arraycopy(storage, sortedIndex, storage, sortedIndex + 1, size - sortedIndex);
-        storage[sortedIndex] = r;
+        storage[sortedIndex] = resume;
     }
 
     @Override
-    public void deleteR(int index) {
+    public void fillDeletedElement(int index) {
         System.arraycopy(storage, index + 1, storage, index, size - index - 1);
     }
 

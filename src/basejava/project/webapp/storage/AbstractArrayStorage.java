@@ -6,53 +6,51 @@ import basejava.project.webapp.model.Resume;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage<Integer> implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     protected static final int STORAGE_LIMIT = 10_000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    protected abstract void insertR(Resume r, int index);
+    protected abstract void insertResume(Resume resume, int index);
 
-    protected abstract void deleteR(int index);
-
-    abstract protected Integer getSearchKey(String uuid);
+    protected abstract void fillDeletedElement(int index);
 
     @Override
-    protected void insertResume(Resume r, Integer index) {
+    protected void doSave(Resume resume, Integer index) {
         if (size >= STORAGE_LIMIT) {
-            throw new StorageException("Storage overflow!", r.getUuid());
+            throw new StorageException("Storage overflow!", resume.getUuid());
         } else {
-            insertR(r, index);
+            insertResume(resume, index);
             size++;
         }
     }
 
     @Override
-    protected void deleteResume(Integer index) {
-        deleteR(index);
+    protected void doDelete(Integer index) {
+        fillDeletedElement(index);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    protected void updateResume(Resume r, Integer index) {
-        storage[index] = r;
+    protected void doUpdate(Resume resume, Integer index) {
+        storage[index] = resume;
     }
 
     @Override
-    protected Resume getResume(Integer index) {
+    protected Resume doGet(Integer index) {
         return storage[index];
     }
 
 
     @Override
-    public List<Resume> getAll() {
+    public List<Resume> doCopyAll() {
         return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
     }
 
     @Override
-    protected boolean isSearchKeyExists(Integer searchKey) {
+    protected boolean isExist(Integer searchKey) {
         return searchKey >= 0;
     }
 

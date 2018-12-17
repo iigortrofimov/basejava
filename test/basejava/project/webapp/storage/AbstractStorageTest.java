@@ -18,16 +18,12 @@ public abstract class AbstractStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
-    private static final String FULL_NAME1 = "fullName1";
-    private static final String FULL_NAME2 = "fullName2";
-    private static final String FULL_NAME3 = "fullName3";
-    private static final String FULL_NAME4 = "fullName4";
-    private static final String DUMMY = "dummy";
-    private static final Resume RESUME_1 = new Resume(UUID_1, FULL_NAME1);
-    private static final Resume RESUME_2 = new Resume(UUID_2, FULL_NAME2);
-    private static final Resume RESUME_3 = new Resume(UUID_3, FULL_NAME3);
-    private static final Resume RESUME_4 = new Resume(UUID_4, FULL_NAME4);
-    private static final Resume DUMMY_RESUME = new Resume(DUMMY);
+    private static final String DUMMY = "dummyUuid";
+    private static final Resume RESUME_1 = new Resume(UUID_1, "Name1");
+    private static final Resume RESUME_2 = new Resume(UUID_2, "Name2");
+    private static final Resume RESUME_3 = new Resume(UUID_3, "Name3");
+    private static final Resume RESUME_4 = new Resume(UUID_4, "Name4");
+    private static final Resume DUMMY_RESUME = new Resume(DUMMY, "dummyName");
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -45,7 +41,7 @@ public abstract class AbstractStorageTest {
     public void save() throws Exception {
         storage.save(RESUME_4);
         assertEquals(4, storage.size());
-        assertSame(RESUME_4, storage.get(RESUME_4.getUuid()));
+        assertSame(RESUME_4, storage.get(UUID_4));
     }
 
     @Test(expected = ExistStorageException.class)
@@ -67,9 +63,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume newResume = RESUME_2;
+        Resume newResume = new Resume(UUID_2, "newName");
         storage.update(newResume);
-        assertSame(newResume, storage.get(newResume.getUuid()));
+        assertSame(newResume, storage.get(UUID_2));
         assertEquals(3, storage.size());
     }
 
@@ -80,7 +76,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() throws Exception {
-        assertSame(RESUME_2, storage.get(RESUME_2.getUuid()));
+        assertSame(RESUME_2, storage.get(UUID_2));
     }
 
     @Test(expected = NotExistStorageException.class)
