@@ -9,22 +9,22 @@ import java.util.Map;
 
 public class MapResumeStorage extends AbstractStorage<Resume> {
 
-    private Map<String, Resume> storage = new HashMap<>();
+    private Map<String, Resume> mapStorage = new HashMap<>();
 
     @Override
     protected void doSave(Resume resume, Resume searchKeyResume) {
-        storage.put(resume.getUuid(), resume);
+        mapStorage.put(resume.getUuid(), resume);
     }
 
     @Override
     protected void doDelete(Resume resume) {
 
-        storage.remove(resume.getUuid());
+        mapStorage.remove(resume.getUuid());
     }
 
     @Override
     protected void doUpdate(Resume resume, Resume searchKeyResume) {
-        storage.put(resume.getUuid(), resume);
+        mapStorage.put(resume.getUuid(), resume);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
 
     @Override
     protected List<Resume> doCopyAll() {
-        return new ArrayList<>(storage.values());
+        return new ArrayList<>(mapStorage.values());
     }
 
     @Override
@@ -44,16 +44,16 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
 
     @Override
     protected Resume getSearchKey(String uuid) {
-        return storage.get(uuid);
+        return mapStorage.get(uuid);
     }
 
     @Override
     public void clear() {
-        storage.clear();
+        mapStorage.clear();
     }
 
     @Override
     public int size() {
-        return storage.size();
+        return mapStorage.size();
     }
 }
