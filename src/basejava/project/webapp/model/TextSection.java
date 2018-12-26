@@ -1,20 +1,13 @@
 package basejava.project.webapp.model;
 
+import java.util.Objects;
+
 public class TextSection implements Section {
-    private String title;
     private String text;
 
-    public TextSection(String title, String text) {
-        this.title = title;
+    public TextSection(String text) {
+        Objects.requireNonNull(text, "text must mot be null");
         this.text = text;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getText() {
@@ -32,22 +25,18 @@ public class TextSection implements Section {
 
         TextSection that = (TextSection) o;
 
-        if (!title.equals(that.title)) return false;
         return text.equals(that.text);
     }
 
     @Override
     public int hashCode() {
-        int result = title.hashCode();
-        result = 31 * result + text.hashCode();
-        return result;
+        return text.hashCode();
     }
 
     @Override
     public String toString() {
         return "TextSection{" +
-                "title='" + title + '\'' +
-                ", text='" + text + '\'' +
+                "text='" + text + '\'' +
                 '}';
     }
 }

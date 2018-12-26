@@ -1,12 +1,17 @@
 package basejava.project.webapp.model;
 
-public class MultiSectionElement {
+import java.util.Objects;
+
+public class Experience {
     private String title;
     private String period;
     private String text;
     private Link link;
 
-    public MultiSectionElement(String title, String period, String text, Link link) {
+    public Experience(String title, String period, String text, Link link) {
+        Objects.requireNonNull(title, "title must not be null");
+        Objects.requireNonNull(period, "period must not be null");
+        Objects.requireNonNull(text, "text must not be null");
         this.title = title;
         this.period = period;
         this.text = text;
@@ -50,7 +55,7 @@ public class MultiSectionElement {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MultiSectionElement that = (MultiSectionElement) o;
+        Experience that = (Experience) o;
 
         if (!title.equals(that.title)) return false;
         if (!period.equals(that.period)) return false;
@@ -69,7 +74,7 @@ public class MultiSectionElement {
 
     @Override
     public String toString() {
-        return "MultiSectionElement{" +
+        return "Experience{" +
                 "title='" + title + '\'' +
                 ", period='" + period + '\'' +
                 ", text='" + text + '\'' +
