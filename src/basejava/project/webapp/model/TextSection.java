@@ -3,7 +3,7 @@ package basejava.project.webapp.model;
 import java.util.Objects;
 
 public class TextSection implements Section {
-    private String text;
+    private final String text;
 
     public TextSection(String text) {
         Objects.requireNonNull(text, "text must mot be null");
@@ -12,10 +12,6 @@ public class TextSection implements Section {
 
     public String getText() {
         return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     @Override

@@ -4,19 +4,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class ExperienceSection implements Section {
-    private List<Experience> elementList;
+    private final List<Experience> experienceList;
 
-    public ExperienceSection(List<Experience> elementList) {
-        Objects.requireNonNull(elementList, "experience must not be null");
-        this.elementList = elementList;
+    public ExperienceSection(List<Experience> experienceList) {
+        Objects.requireNonNull(experienceList, "experienceList must not be null");
+        this.experienceList = experienceList;
     }
 
-    public List<Experience> getElementList() {
-        return elementList;
-    }
-
-    public void setElementList(List<Experience> elementList) {
-        this.elementList = elementList;
+    public List<Experience> getExperienceList() {
+        return experienceList;
     }
 
     @Override
@@ -26,18 +22,18 @@ public class ExperienceSection implements Section {
 
         ExperienceSection that = (ExperienceSection) o;
 
-        return elementList.equals(that.elementList);
+        return experienceList.equals(that.experienceList);
     }
 
     @Override
     public int hashCode() {
-        return elementList.hashCode();
+        return experienceList.hashCode();
     }
 
     @Override
     public String toString() {
         return "ExperienceSection{" +
-                "elementList=" + elementList +
+                "experienceList=" + experienceList +
                 '}';
     }
 }

@@ -35,6 +35,14 @@ public class Resume implements Comparable<Resume> {
         return fullName;
     }
 
+    public Map<ContactType, Contact> getContact() {
+        return contact;
+    }
+
+    public Map<SectionType, Section> getSection() {
+        return section;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,16 +52,16 @@ public class Resume implements Comparable<Resume> {
 
         if (!uuid.equals(resume.uuid)) return false;
         if (!fullName.equals(resume.fullName)) return false;
-        if (!contact.equals(resume.contact)) return false;
-        return section.equals(resume.section);
+        if (contact != null ? !contact.equals(resume.contact) : resume.contact != null) return false;
+        return section != null ? section.equals(resume.section) : resume.section == null;
     }
 
     @Override
     public int hashCode() {
         int result = uuid.hashCode();
         result = 31 * result + fullName.hashCode();
-        result = 31 * result + contact.hashCode();
-        result = 31 * result + section.hashCode();
+        result = 31 * result + (contact != null ? contact.hashCode() : 0);
+        result = 31 * result + (section != null ? section.hashCode() : 0);
         return result;
     }
 

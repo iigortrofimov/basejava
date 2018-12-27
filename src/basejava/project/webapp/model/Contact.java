@@ -10,6 +10,10 @@ public class Contact {
         this.link = link;
     }
 
+    public Contact(String text) {
+        this.text = text;
+    }
+
     public String getText() {
         return text;
     }

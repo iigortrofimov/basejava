@@ -4,19 +4,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class ListSection implements Section {
-    private List<String> pointList;
+    private final List<String> points;
 
-    public ListSection(List<String> pointList) {
-        Objects.requireNonNull(pointList, "stringList must not be null");
-        this.pointList = pointList;
+    public ListSection(List<String> points) {
+        Objects.requireNonNull(points, "points must not be null");
+        this.points = points;
     }
 
-    public List<String> getPointList() {
-        return pointList;
-    }
-
-    public void setPointList(List<String> pointList) {
-        this.pointList = pointList;
+    public List<String> getPoints() {
+        return points;
     }
 
     @Override
@@ -26,18 +22,18 @@ public class ListSection implements Section {
 
         ListSection that = (ListSection) o;
 
-        return pointList.equals(that.pointList);
+        return points.equals(that.points);
     }
 
     @Override
     public int hashCode() {
-        return pointList.hashCode();
+        return points.hashCode();
     }
 
     @Override
     public String toString() {
         return "ListSection{" +
-                "pointList=" + pointList +
+                "points=" + points +
                 '}';
     }
 }
