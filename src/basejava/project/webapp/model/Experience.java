@@ -10,7 +10,7 @@ public class Experience {
     private final String description;
     private final Link link;
 
-    public Experience(String title, LocalDate startDate, LocalDate endDate, String description, Link link) {
+    public Experience(String title, LocalDate startDate, LocalDate endDate, String description, String name, String url) {
         Objects.requireNonNull(title, "title must not be null");
         Objects.requireNonNull(startDate, "startDate must not be null");
         Objects.requireNonNull(endDate, "endDate must not be null");
@@ -18,7 +18,7 @@ public class Experience {
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
-        this.link = link;
+        this.link = new Link(name, url);
     }
 
     @Override

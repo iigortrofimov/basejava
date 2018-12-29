@@ -13,7 +13,7 @@ public class Resume implements Comparable<Resume> {
     // Unique identifier
     private final String uuid;
     private final String fullName;
-    private final Map<ContactType, Contact> contact = new EnumMap<>(ContactType.class);
+    private final Map<ContactType, String> contact = new EnumMap<>(ContactType.class);
     private final Map<SectionType, Section> section = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
@@ -35,7 +35,7 @@ public class Resume implements Comparable<Resume> {
         return fullName;
     }
 
-    public Map<ContactType, Contact> getContact() {
+    public Map<ContactType, String> getContact() {
         return contact;
     }
 
@@ -52,16 +52,16 @@ public class Resume implements Comparable<Resume> {
 
         if (!uuid.equals(resume.uuid)) return false;
         if (!fullName.equals(resume.fullName)) return false;
-        if (contact != null ? !contact.equals(resume.contact) : resume.contact != null) return false;
-        return section != null ? section.equals(resume.section) : resume.section == null;
+        if (!contact.equals(resume.contact)) return false;
+        return section.equals(resume.section);
     }
 
     @Override
     public int hashCode() {
         int result = uuid.hashCode();
         result = 31 * result + fullName.hashCode();
-        result = 31 * result + (contact != null ? contact.hashCode() : 0);
-        result = 31 * result + (section != null ? section.hashCode() : 0);
+        result = 31 * result + contact.hashCode();
+        result = 31 * result + section.hashCode();
         return result;
     }
 

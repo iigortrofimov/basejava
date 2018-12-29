@@ -3,15 +3,15 @@ package basejava.project.webapp.model;
 import java.util.Objects;
 
 public class TextSection implements Section {
-    private final String text;
+    private final String content;
 
-    public TextSection(String text) {
-        Objects.requireNonNull(text, "text must mot be null");
-        this.text = text;
+    public TextSection(String content) {
+        Objects.requireNonNull(content, "content must not be null");
+        this.content = content;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
     @Override
@@ -21,18 +21,18 @@ public class TextSection implements Section {
 
         TextSection that = (TextSection) o;
 
-        return text.equals(that.text);
+        return content.equals(that.content);
     }
 
     @Override
     public int hashCode() {
-        return text.hashCode();
+        return content.hashCode();
     }
 
     @Override
     public String toString() {
         return "TextSection{" +
-                "text='" + text + '\'' +
+                "content='" + content + '\'' +
                 '}';
     }
 }
